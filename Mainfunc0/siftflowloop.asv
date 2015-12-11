@@ -47,7 +47,7 @@ save(['DepthWarped',num2str(i+1),'.mat'],'DepthWarped');
 u=vx(1:5:size(vx,1),1:5:size(vx,1));v=vy(1:5:size(vx,1),1:5:size(vx,1));
 figure;
 imshow(Origin);hold on;
-quiver(pos_x,pos_y,u,v);
+quiver(pos_x,pos_y,-u,-v);
 
 
 

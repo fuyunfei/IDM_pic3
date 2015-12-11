@@ -1,6 +1,6 @@
 clear all; close all ;
 %load('../test image/4D.mat');
-load('DepthWarped8.mat');
+load('DepthWarped1.mat');
 Zvalue=DepthWarped; 
 minD=min(Zvalue(:));
 maxD=max(Zvalue(:));
@@ -14,5 +14,5 @@ end
 %Zvalue= -Zvalue+ones(size(Zvalue))*max(Zvalue(:));
 [xx,yy]=meshgrid(1:size(Zvalue,1),1:size(Zvalue,2));
 
-saveobjmesh('cpp_IM8.obj',xx,yy,Zvalue  )
+saveobjmesh('cpp_I1.obj',xx,yy,Zvalue  )
 disp('done!')
