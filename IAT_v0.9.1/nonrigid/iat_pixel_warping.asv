@@ -1,7 +1,6 @@
 function [ wimg, support ] = iat_pixel_warping( img, dx, dy , nx, ny, nz, DepImg)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%load warpinput.mat ; [DepthWarped, support] = iat_pixel_warping(DepthRef,vx,vy,nx,ny,nz,1);
-%[WIMG, SUPPRORT] =  = IAT_PIXEL_WARPING(IMG,DX,DY)
+% [WIMG, SUPPRORT] =  = IAT_PIXEL_WARPING(IMG,DX,DY)
 %
 % IAT_PIXEL_WARPING performs an inverse warping in a pixel basis, i.e., 
 % every pixel is warped separately according to horizontal and vertical 
@@ -62,7 +61,7 @@ img  = double(img);
 for i=1:zim
     
 if DepImg == 1 
-     
+    temp(support)=0;  
 for h= 1:size(nz,1);
     for l = 1:size(nz,2);
     index=(h-1)*size(nz,1)+l;
@@ -70,12 +69,9 @@ for h= 1:size(nz,1);
     normP=[nx(h,l) ny(h,l) nz(h,l)];
     Angle=atan2(norm(cross(UV,normP)), dot(UV,normP));
     UV_modi=UV-normP*norm(UV)*cos(Angle);
-   if ~( XX(h,l)<1 | XX(h,l)>cim | YY(h,l)<1 | YY(h,l)>rim)
-    temp(YY(h,l),XX(h,l),i)=img(h,l,i)+UV_modi(3);
+   if ~ XX(h,l)<1 | XX(h,l)>cim | YY(h,l)<1 | YY(h,l)>rim
+    temp(XX(h,l),YY(h,l),i)=img(h,l,i)+UV_modi(3);
    end 
-   if temp(h,l,i)==0  
-      temp(h,l,i)=img(h,l,i);
-   end
    end
 end 
     wimg(:,:,i)= temp;

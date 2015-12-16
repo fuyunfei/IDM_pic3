@@ -37,9 +37,13 @@ SIFTflowpara.nIterations=60;
 Originreduce=Origin(patchsize/2+1:end-patchsize/2,patchsize/2+1:end-patchsize/2,:);
 DepthRef=DepthRef(patchsize/2+1:end-patchsize/2,patchsize/2+1:end-patchsize/2,:);
 
-[warpImage, support] = iat_pixel_warping(Originreduce,vx,vy);
+[xx,yy]=meshgrid(1:size(DepthRef,1),1:size(DepthRef,2));
+[nx ny nz]=surfnorm(xx,yy,DepthRef);
+
+[warpImage, support] = iat_pixel_warping(Originreduce,vx,vy,nx,ny,nz,0);
 imwrite(uint8(warpImage),['ImageWarped',num2str(i+1),'.jpg']); 
-[DepthWarped, support] = iat_pixel_warping(DepthRef,vx,vy);
+
+[DepthWarped, support] = iat_pixel_warping(DepthRef,vx,vy,nx,ny,nz,1);
 DepthWarped(find(~DepthWarped))=DepthWarped(1,1);
 save(['DepthWarped',num2str(i+1),'.mat'],'DepthWarped');
 
